@@ -14,30 +14,51 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    Button btnScan;
+    Button btnScan, btnDb, btnView;
     TextView tvScanContent, tvScanFormat;
+    String code;
+    DBHandler db;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         btnScan=findViewById(R.id.btnScan);
         btnScan.setOnClickListener(this);
+        btnDb = findViewById(R.id.btnDb);
+        btnDb.setOnClickListener(this);
         tvScanContent = findViewById(R.id.tvScanContent);
         tvScanFormat = findViewById(R.id.tvScanFormat);
+        btnView = findViewById(R.id.btnView);
+        btnView.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setPrompt("Scan a barcode");
-        integrator.setOrientationLocked(true);
-        integrator.initiateScan();
+
+        switch (view.getId()){
+            case R.id.btnScan:
+            IntentIntegrator integrator = new IntentIntegrator(this);
+            integrator.setPrompt("Scan a barcode");
+            integrator.setOrientationLocked(true);
+            integrator.initiateScan();
+            break;
+            case R.id.btnDb:
+                Intent intent = new Intent(this,ShowDB.class);
+                startActivity(intent);
+                break;
+            case R.id.btnView:
+                Intent i = new Intent(this,ViewItems.class);
+                startActivity(i);
+                break;
+        }
 
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode,resultCode,data);
 
@@ -48,6 +69,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else{
                 tvScanFormat.setText(result.getFormatName());
                 tvScanContent.setText(result.getContents());
+                code = result.getContents();
+                switchAfterScan();
+
             }
 
 
@@ -57,6 +81,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
+
+    }
+
+    private void switchAfterScan(){
+        Intent switchActInt = new Intent(this,DBActivity.class);
+        switchActInt.putExtra("variable",code);
+        startActivity(switchActInt);
 
     }
 }
