@@ -31,8 +31,7 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String PRICE_COL = "price";
 
     private static final String CODE_COL = "code";
-
-
+    public int id;
 
 
     // creating a constructor for our database handler.
@@ -60,7 +59,7 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // this method is use to add new course to our sqlite database.
-    public void addNewItem(String itemName, String itemPrice,String itemCode) {
+    public void addNewItem(String itemName, String itemPrice, String itemCode) {
 
         // on below line we are creating a variable for 
         // our sqlite database and calling writable method 
@@ -77,13 +76,22 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(PRICE_COL, itemPrice);
         values.put(CODE_COL, itemCode);
 
-
         // after adding all values we are passing
-        // content values to our table.
+        // content values to table.
         db.insert(TABLE_NAME, null, values);
+        //closing db
+        db.close();
+    }
 
-        // at last we are closing our
-        // database after adding database.
+    public void editItem(String oldItemName, String newItemName, String itemPrice, String itemCode) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(NAME_COL, newItemName);
+        values.put(PRICE_COL, itemPrice);
+        values.put(CODE_COL, itemCode);
+
+        db.update(TABLE_NAME, values, "name=?", new String[]{oldItemName});
         db.close();
     }
 
@@ -93,6 +101,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
     public ArrayList<ItemModal> readItems() {
         // on below line we are creating a
         // database for reading our database.
@@ -119,4 +128,12 @@ public class DBHandler extends SQLiteOpenHelper {
         cursorItems.close();
         return itemModalArrayList;
     }
+
+
+    public void deleteItem(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME,ID_COL+ " =?", new String[]{Long.toString(id)});
+        db.close();
+    }
+
 }

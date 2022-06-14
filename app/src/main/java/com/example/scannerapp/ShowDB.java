@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 public class ShowDB extends AppCompatActivity {
     TextView tvPrintDb;
-    public DBHandler printDb;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,7 @@
 package com.example.scannerapp;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
@@ -20,7 +21,7 @@ public class DBActivity extends AppCompatActivity{
     EditText etPrice;
     private MainActivity scan;
     private DBHandler dbHandler;
-    String itemName;
+    public String itemName;
     String itemPrice;
     Intent intent;
     String rCode;
@@ -68,13 +69,15 @@ public class DBActivity extends AppCompatActivity{
 
                     // after adding the data we are displaying a toast message.
                     Toast.makeText(DBActivity.this, "Item has been added.", Toast.LENGTH_SHORT).show();
-                    Intent swapAct = new Intent(DBActivity.this,ShowDB.class);
+                    Intent swapAct = new Intent(DBActivity.this,ViewItems.class);
                     startActivity(swapAct);
 
 
             }
         });
 
+
     }
+
 
 }

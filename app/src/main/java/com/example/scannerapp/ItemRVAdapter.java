@@ -48,6 +48,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ViewHolder
         return itemModalArrayList.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         // creating variables for our text views.

@@ -4,7 +4,7 @@ public class ItemModal {
 
     // variables for our itemname,
     // price,code and id.
-    private String itemName;
+    public String itemName;
     private String itemPrice;
     private String itemCode;
     private int id;
