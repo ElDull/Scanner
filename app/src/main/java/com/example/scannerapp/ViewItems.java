@@ -1,28 +1,36 @@
 package com.example.scannerapp;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.PopupMenu;
 
+import android.content.DialogInterface;
+import android.os.Bundle;
+
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 
 import java.util.ArrayList;
 
-public class ViewItems extends AppCompatActivity  {
+public class ViewItems extends AppCompatActivity implements View.OnClickListener {
 
     // creating variables for our array list,
     // dbhandler, adapter and recycler view.
     private ArrayList<ItemModal> itemModalArrayList;
     private DBHandler dbHandler;
     private ItemRVAdapter itemsRVAdapter;
+    ItemModal delItem;
     private RecyclerView itemsRV;
-    public Button btnMenu;
-    String name;
+    public FloatingActionButton btnMenu;
+    TextView tvScanContent, tvScanFormat;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +40,12 @@ public class ViewItems extends AppCompatActivity  {
         // initializing our all variables.
         itemModalArrayList = new ArrayList<>();
         dbHandler = new DBHandler(ViewItems.this);
-        //btnMenu = findViewById(R.id.btnMenu);
-       // btnMenu.setOnClickListener(new View.OnClickListener(){
+        MainActivity scanAdd = new MainActivity();
+        tvScanContent = findViewById(R.id.tvScanContent);
+        tvScanFormat = findViewById(R.id.tvScanFormat);
+        btnMenu = findViewById(R.id.btnMenu);
+        btnMenu.setOnClickListener(this);
 
-          //  @Override
-           // public void onClick(View v) {
-               // PopupMenu popupMenu = new PopupMenu(ViewItems.this,v);
-
-
-            //}
-       // });
 
         // getting our course array
         // list from db handler class.
@@ -59,6 +63,8 @@ public class ViewItems extends AppCompatActivity  {
         itemsRV.setAdapter(itemsRVAdapter);
     }
 
+
+
     ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -69,7 +75,6 @@ public class ViewItems extends AppCompatActivity  {
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 
             itemModalArrayList.remove(viewHolder.getAdapterPosition());
-            dbHandler.deleteItem(viewHolder.getItemId());
             itemsRVAdapter.notifyDataSetChanged();
 
 
@@ -77,4 +82,18 @@ public class ViewItems extends AppCompatActivity  {
         }
     };
 
+
+    @Override
+    public void onClick(View view) {
+        dbHandler.getData();
+
+    }
+    public void onClickCode(){
+        delItem.getItemCode();
+    }
+    public void onClickName(){
+        delItem.getitemName();
+    }
 }
+
+

@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnScan, btnDb, btnView;
     TextView tvScanContent, tvScanFormat;
     String code;
-    DBHandler db;
+
 
 
     @Override
@@ -35,8 +35,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void startScan() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt("Scan a barcode");
+        integrator.setOrientationLocked(true);
+        integrator.initiateScan();
+    }
+
     @Override
     public void onClick(View view) {
+
 
         switch (view.getId()){
             case R.id.btnScan:
@@ -53,7 +61,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent i = new Intent(this,ViewItems.class);
                 startActivity(i);
                 break;
+
         }
+
 
     }
 
@@ -88,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent switchActInt = new Intent(this,DBActivity.class);
         switchActInt.putExtra("variable",code);
         startActivity(switchActInt);
+
 
     }
 }

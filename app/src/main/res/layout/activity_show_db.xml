@@ -9,10 +9,13 @@
     android:elevation="8dp"
     app:cardBackgroundColor="@color/white"
     app:cardCornerRadius="4dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:onClick="onClick"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ShowDB"
     >
-
+<!-- TODO MAKE EDIT BUTTON WORK AND NOT MESS UP LAYOUT -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +23,7 @@
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
+        android:onClick="onClick"
         >
 
         <!--text view for our course name-->
@@ -32,11 +36,24 @@
             android:textColor="@color/black"
             />
 
+        <ImageButton
+            android:id="@+id/btnMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:backgroundTint="@color/white"
+            android:background="@color/black"
+            android:src="@drawable/ic_more">
+
+        </ImageButton>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="2"
+            android:onClick="onClick"
+            >
 
             <!--text view for our course tracks-->
             <TextView
@@ -46,6 +63,7 @@
                 android:layout_weight="1"
                 android:padding="3dp"
                 android:text="Item Price"
+                android:onClick="onClick"
                 android:textColor="@color/black" />
 
 
@@ -58,6 +76,7 @@
                 android:padding="3dp"
                 android:text="Code: "
                 android:textColor="@color/black" />
+
 
         </LinearLayout>
 

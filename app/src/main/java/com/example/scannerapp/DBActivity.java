@@ -58,15 +58,21 @@ public class DBActivity extends AppCompatActivity{
                 itemPrice = etPrice.getText().toString();
 
                 // validating if the text fields are empty or not.
-                if (itemName.isEmpty() && itemPrice.isEmpty() && rCode.isEmpty()) {
+                if (itemName.isEmpty() || itemPrice.isEmpty() || rCode.isEmpty()) {
                     Toast.makeText(DBActivity.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //TODO IF CODE EXISTS RETRUN THIS ITEM EXISTS
+                if (dbHandler.isExist(rCode)){
+                    Toast.makeText(DBActivity.this, "This Item already exists..", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 // on below line we are calling a method to add new
                 // course to sqlite data and pass all our values to it.
-
+                else {
                     dbHandler.addNewItem(itemName, itemPrice, rCode);
-
+                }
                     // after adding the data we are displaying a toast message.
                     Toast.makeText(DBActivity.this, "Item has been added.", Toast.LENGTH_SHORT).show();
                     Intent swapAct = new Intent(DBActivity.this,ViewItems.class);

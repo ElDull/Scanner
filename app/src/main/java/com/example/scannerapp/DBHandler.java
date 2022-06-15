@@ -1,13 +1,22 @@
 package com.example.scannerapp;
 
+import static android.content.ContentValues.TAG;
+
 import android.annotation.SuppressLint;
+import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DBHandler extends SQLiteOpenHelper {
 
@@ -30,8 +39,13 @@ public class DBHandler extends SQLiteOpenHelper {
     // below variable for our course description column.
     private static final String PRICE_COL = "price";
 
-    private static final String CODE_COL = "code";
+    public static final String CODE_COL = "code";
     public int id;
+    ResultSet result= null;
+    Statement statement = null;
+    Connection dbConnection = null;
+
+
 
 
     // creating a constructor for our database handler.
@@ -73,7 +87,7 @@ public class DBHandler extends SQLiteOpenHelper {
         // on below line we are passing all values 
         // along with its key and value pair.
         values.put(NAME_COL, itemName);
-        values.put(PRICE_COL, itemPrice);
+        values.put(PRICE_COL, itemPrice + "₪");
         values.put(CODE_COL, itemCode);
 
         // after adding all values we are passing
@@ -82,18 +96,50 @@ public class DBHandler extends SQLiteOpenHelper {
         //closing db
         db.close();
     }
-
+    //TODO editItem with 3 points button
     public void editItem(String oldItemName, String newItemName, String itemPrice, String itemCode) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
         values.put(NAME_COL, newItemName);
         values.put(PRICE_COL, itemPrice);
         values.put(CODE_COL, itemCode);
 
         db.update(TABLE_NAME, values, "name=?", new String[]{oldItemName});
         db.close();
+        onCreate(db);
+
     }
+
+    public boolean isExist(String rcode) {
+        SQLiteDatabase db = getWritableDatabase();
+        String selectString = "SELECT * FROM " + TABLE_NAME+ " WHERE " + CODE_COL + " =?";
+
+        // Add the String you are searching by here.
+        // Put it in an array to avoid an unrecognized token error
+        Cursor cursor = db.rawQuery(selectString, new String[] {rcode});
+
+        boolean hasObject = false;
+        if(cursor.moveToFirst()){
+            hasObject = true;
+
+            //region if you had multiple records to check for, use this region.
+
+            int count = 0;
+            while(cursor.moveToNext()){
+                count++;
+            }
+            //here, count is records found
+            Log.d(TAG, String.format("%d records found", count));
+
+            //endregion
+
+        }
+
+        cursor.close();          // Dont forget to close your cursor
+        db.close();              //AND your Database!
+        return hasObject;
+    }
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -129,11 +175,38 @@ public class DBHandler extends SQLiteOpenHelper {
         return itemModalArrayList;
     }
 
-
+    //TODO DEL ITEM BY SWIPING
     public void deleteItem(long id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME,ID_COL+ " =?", new String[]{Long.toString(id)});
         db.close();
     }
+    public List<ItemModal> getData() throws NullPointerException{
+        List<ItemModal> list = new ArrayList<>();
+        SQLiteDatabase db = getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME +";";
+        Cursor c = db.rawQuery(query,null);
+        c.moveToFirst();
 
-}
+        if (c.equals(null)){
+            return null;
+        }
+        else{
+            do {
+                list.add(new ItemModal(c.getString(1),c.getString(2),c.getString(3)));
+
+            }while (c.moveToNext());
+
+            }
+        db.close();
+        return list;
+        }
+
+    }
+
+
+
+
+
+
+
