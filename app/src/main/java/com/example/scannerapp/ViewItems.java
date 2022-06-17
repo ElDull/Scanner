@@ -73,7 +73,7 @@ public class ViewItems extends AppCompatActivity implements View.OnClickListener
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
+//test
             ItemModal x = dbHandler.readItem(viewHolder.getAdapterPosition());
             dbHandler.deleteItem(x.getitemName());
             Toast.makeText(ViewItems.this,"Item " + x.getitemName() + "was deleted", Toast.LENGTH_SHORT).show();
