@@ -5,9 +5,9 @@ import java.math.BigInteger;
 public class StoreItem {
     private String code;
     private String name;
-    private double price;
+    private String price;
 
-    public StoreItem(String code, String name, double price) {
+    public StoreItem(String code, String name, String price) {
         this.code = code;
         this.name = name;
         this.price = price;
@@ -29,11 +29,11 @@ public class StoreItem {
         this.name = name;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 }

@@ -62,7 +62,7 @@ public class DBActivity extends AppCompatActivity{
                     Toast.makeText(DBActivity.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //TODO IF CODE EXISTS RETRUN THIS ITEM EXISTS
+                //TODO IF CODE EXISTS RETURN THIS ITEM EXISTS
                 if (dbHandler.isExist(rCode)){
                     Toast.makeText(DBActivity.this, "This Item already exists..", Toast.LENGTH_SHORT).show();
                     return;
