@@ -47,6 +47,8 @@ public class DBActivity extends AppCompatActivity{
         intent = getIntent();
         rCode = intent.getStringExtra("variable");
         tvCode.setText(rCode);
+
+        //create FirebaseHandler instance
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
         // below line is to add on click listener for our add course button.
@@ -73,6 +75,7 @@ public class DBActivity extends AppCompatActivity{
                 // course to sqlite data and pass all our values to it.
                 else {
                     dbHandler.addNewItem(itemName, itemPrice, rCode);
+                    // add item to firestore
                     firebaseHandler.addItem(new StoreItem(rCode, itemName, itemPrice));
                 }
                     // after adding the data we are displaying a toast message.
