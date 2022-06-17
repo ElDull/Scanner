@@ -74,6 +74,7 @@ public class FirebaseHandler {
          * Gets the item by code from the firestore db
          * @param code the barcode value of the item
          */
+        // test
         DocumentReference docRef = db.collection("items").document(code);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
