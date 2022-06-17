@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button btnScan, btnDb, btnView;
-    TextView tvScanContent, tvScanFormat, apiTest;
+    TextView tvScanContent, tvScanFormat;
     String code;
 
 
@@ -34,13 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvScanContent = findViewById(R.id.tvScanContent);
         btnView = findViewById(R.id.btnView);
         btnView.setOnClickListener(this);
-
         FirebaseHandler firebase = new FirebaseHandler();
-        StoreItem item = new StoreItem("4139248129", "Mort's Food", 20.50);
-        firebase.addItem(item);
-        firebase.getItem("4139248129");
-        firebase.getAllItems();
-
 
     }
 

@@ -47,6 +47,7 @@ public class DBActivity extends AppCompatActivity{
         intent = getIntent();
         rCode = intent.getStringExtra("variable");
         tvCode.setText(rCode);
+        FirebaseHandler firebaseHandler = new FirebaseHandler();
 
         // below line is to add on click listener for our add course button.
         addItemBtn.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +63,7 @@ public class DBActivity extends AppCompatActivity{
                     Toast.makeText(DBActivity.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //TODO IF CODE EXISTS RETRUN THIS ITEM EXISTS
+                //TODO IF CODE EXISTS RETURN THIS ITEM EXISTS
                 if (dbHandler.isExist(rCode)){
                     Toast.makeText(DBActivity.this, "This Item already exists..", Toast.LENGTH_SHORT).show();
                     return;
@@ -72,6 +73,7 @@ public class DBActivity extends AppCompatActivity{
                 // course to sqlite data and pass all our values to it.
                 else {
                     dbHandler.addNewItem(itemName, itemPrice, rCode);
+                    firebaseHandler.addItem(new StoreItem(rCode, itemName, itemPrice));
                 }
                     // after adding the data we are displaying a toast message.
                     Toast.makeText(DBActivity.this, "Item has been added.", Toast.LENGTH_SHORT).show();
