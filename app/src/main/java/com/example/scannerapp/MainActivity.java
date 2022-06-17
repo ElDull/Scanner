@@ -13,9 +13,12 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.List;
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     Button btnScan, btnDb, btnView;
-    TextView tvScanContent, tvScanFormat;
+    TextView tvScanContent, tvScanFormat, apiTest;
     String code;
 
 
@@ -29,9 +32,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDb = findViewById(R.id.btnDb);
         btnDb.setOnClickListener(this);
         tvScanContent = findViewById(R.id.tvScanContent);
-        tvScanFormat = findViewById(R.id.tvScanFormat);
         btnView = findViewById(R.id.btnView);
         btnView.setOnClickListener(this);
+
+        FirebaseHandler firebase = new FirebaseHandler();
+        StoreItem item = new StoreItem("4139248129", "Mort's Food", 20.50);
+        firebase.addItem(item);
+        firebase.getItem("4139248129");
+        firebase.getAllItems();
+
 
     }
 
@@ -77,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Toast.makeText(getBaseContext(),"Cancelled",Toast.LENGTH_LONG).show();
             }
             else{
-                tvScanFormat.setText(result.getFormatName());
+                //tvScanFormat.setText(result.getFormatName());
                 tvScanContent.setText(result.getContents());
                 code = result.getContents();
                 switchAfterScan();
