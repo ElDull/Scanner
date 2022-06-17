@@ -2,12 +2,11 @@ package com.example.scannerapp;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
+import android.database.CursorIndexOutOfBoundsException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -175,10 +174,20 @@ public class DBHandler extends SQLiteOpenHelper {
         return itemModalArrayList;
     }
 
+    public ItemModal readItem(int pos) throws CursorIndexOutOfBoundsException {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        c.moveToPosition(pos);
+        ItemModal itemModal = new ItemModal(c.getString(1),c.getString(2),c.getString(3));
+
+        return itemModal;
+    }
+
     //TODO DEL ITEM BY SWIPING
-    public void deleteItem(long id) {
+    public void deleteItem(String ItemName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME,ID_COL+ " =?", new String[]{Long.toString(id)});
+        db.delete(TABLE_NAME, "name=?", new String[]{ItemName});
         db.close();
     }
     public List<ItemModal> getData() throws NullPointerException{

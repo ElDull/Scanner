@@ -11,7 +11,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 public class DBActivity extends AppCompatActivity{
 
     // creating variables for our edittext, button and dbhandler
@@ -19,12 +18,10 @@ public class DBActivity extends AppCompatActivity{
     TextView tvCode;
     EditText etName;
     EditText etPrice;
-    private MainActivity scan;
     private DBHandler dbHandler;
-    public String itemName;
-    String itemPrice;
-    Intent intent;
-    String rCode;
+    public String itemName,rCode,itemPrice;
+    public Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +62,7 @@ public class DBActivity extends AppCompatActivity{
                     Toast.makeText(DBActivity.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                //TODO IF CODE EXISTS RETURN THIS ITEM EXISTS
+                //TODO IF CODE EXISTS RETRUN THIS ITEM EXISTS
                 if (dbHandler.isExist(rCode)){
                     Toast.makeText(DBActivity.this, "This Item already exists..", Toast.LENGTH_SHORT).show();
                     return;
