@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.motion.widget.OnSwipe;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ViewHolder
     // variable for our array list and context
     private ArrayList<ItemModal> itemModalArrayList;
     private Context context;
+
 
     // constructor
     public ItemRVAdapter(ArrayList<ItemModal> itemModalArrayList, Context context) {
@@ -75,4 +78,5 @@ public class ItemRVAdapter extends RecyclerView.Adapter<ItemRVAdapter.ViewHolder
             Toast.makeText(view.getContext(),itemCodeTV.getText(),Toast.LENGTH_SHORT).show();
         }
     }
+
 }
