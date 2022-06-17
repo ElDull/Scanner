@@ -44,6 +44,7 @@ public class DBActivity extends AppCompatActivity{
         intent = getIntent();
         rCode = intent.getStringExtra("variable");
         tvCode.setText(rCode);
+
         FirebaseHandler firebaseHandler = new FirebaseHandler();
 
         // below line is to add on click listener for our add course button.
